@@ -1,11 +1,14 @@
-﻿namespace Data.Entities;
+﻿using System.ComponentModel.DataAnnotations;
 
-public class CompaniesEntity
+namespace Data.Entities;
+
+public class CompanyEntity
 {
+    [Key]
     public int Id { get; set; }
     public string CompanyName { get; set; } = null!;
     public string Address { get; set; } = null!;
     public string CompanyPhone { get; set; } = null!;
 
-    public ICollection<ContactPersonsEntity> ContactPersons { get; set; } = [];
+    public ICollection<ContactPersonEntity> ContactPersons { get; set; } = [];
 }
