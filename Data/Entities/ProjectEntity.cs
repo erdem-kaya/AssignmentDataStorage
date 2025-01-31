@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Data.Entities;
 
@@ -6,7 +7,11 @@ public class ProjectEntity
 {
     [Key]
     public int Id { get; set; }
+    [Required]
+    [Column(TypeName = "nvarchar(100)")]
     public string Title { get; set; } = null!;
+    [Required]
+    [Column(TypeName = "nvarchar(max)")]
     public string Description { get; set; } = null!;
     public DateTime StartDate { get; set; }
     public DateTime? EndDate { get; set; }

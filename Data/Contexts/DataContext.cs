@@ -24,7 +24,19 @@ public class DataContext(DbContextOptions<DataContext> options) : DbContext(opti
         //ChatGPT hjälpte mig att skapa denna kod
 
         modelBuilder.Entity<ProjectEmployeeEntity>()
-            .HasKey(pe => new { pe.ProjectId, pe.EmployeeId });
+        .HasKey(pe => new { pe.ProjectId, pe.EmployeeId });
+
+        modelBuilder.Entity<ProjectEmployeeEntity>()
+            .HasOne(pe => pe.Project)
+            .WithMany(p => p.ProjectEmployees)
+            .HasForeignKey(pe => pe.ProjectId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<ProjectEmployeeEntity>()
+            .HasOne(pe => pe.Employee)
+            .WithMany()
+            .HasForeignKey(pe => pe.EmployeeId)
+            .OnDelete(DeleteBehavior.Restrict); 
 
         modelBuilder.Entity<StatusTransitionEntity>()
             .HasOne(st => st.FromStatus)
