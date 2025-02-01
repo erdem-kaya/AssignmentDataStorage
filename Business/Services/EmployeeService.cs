@@ -6,11 +6,11 @@ using System.Diagnostics;
 
 namespace Business.Services;
 
-public class EmployeeService(IEmployeeRepository employeeRepository) : BaseService<EmployeeEntity>(employeeRepository), IEmployeeService
+public class EmployeeService(IEmployeeRepository _employeeRepository) : BaseService<EmployeeEntity>(_employeeRepository), IEmployeeService
 {
-    private readonly IEmployeeRepository _employeeRepository = employeeRepository;
+    //Jag har använt mig av Dependency Injection för att injecta IEmployeeRepository i EmployeeService.
 
-    public virtual async Task<EmployeeEntity?> CreateEmployeeAsync(EmployeeRegistrationForm employeeRegistrationForm)
+    public async Task<EmployeeEntity?> CreateEmployeeAsync(EmployeeRegistrationForm employeeRegistrationForm)
     {
         try
         {
@@ -31,4 +31,3 @@ public class EmployeeService(IEmployeeRepository employeeRepository) : BaseServi
         }
     }
 }
-
