@@ -2,6 +2,7 @@
 
 namespace Data.Interfaces;
 
-public interface IProjectEmployeeReposiyory : IBaseRepository<ProjectEmployeeEntity>
+public interface IProjectEmployeeRepository : IBaseRepository<ProjectEmployeeEntity>
 {
+    Task<IEnumerable<ProjectEmployeeEntity>> GetByProjectIdForEmployeesAsync(int projectId);
 }
