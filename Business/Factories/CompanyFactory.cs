@@ -5,15 +5,12 @@ namespace Business.Factories;
 
 public static class CompanyFactory
 {
-
     public static CompanyEntity Create(CompanyRegistrationForm form) => new()
     {
         CompanyName = form.CompanyName,
         Address = form.Address,
         CompanyPhone = form.CompanyPhone,
     };
-
-    
 
     public static Company Create(CompanyEntity entity) => new()
     {
@@ -22,7 +19,7 @@ public static class CompanyFactory
         Address = entity.Address,
         CompanyPhone = entity.CompanyPhone,
 
-        ContactPersons = entity.ContactPersons?.Select(ContactPersonFactory.CreateFromEntity).ToList() ?? []
+        ContactPersons = entity.ContactPersons?.Select(ContactPersonFactory.Create).ToList() ?? []
     };
 
     public static void Update(CompanyEntity entity, CompanyUpdateForm form)
@@ -32,6 +29,4 @@ public static class CompanyFactory
         entity.Address = form.Address;
         entity.CompanyPhone = form.CompanyPhone;
     }
-
-
 }

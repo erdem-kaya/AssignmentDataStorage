@@ -12,4 +12,3 @@ public interface ICompanyService
     Task<Company?> UpdateAsync(CompanyUpdateForm companyUpdateForm);
     Task<bool> DeleteAsync(int id);
 }
-

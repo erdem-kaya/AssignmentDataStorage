@@ -61,6 +61,7 @@ public class CompanyService(ICompanyRepository companyRepository) : ICompanyServ
 
     public async Task<Company?> UpdateAsync(CompanyUpdateForm companyUpdateForm)
     {
+        //Jag är inte nöjd med denna kod. Jag ska kolla när Presentation lagret är klart
         if (companyUpdateForm == null)
             return null!;
 
@@ -87,8 +88,13 @@ public class CompanyService(ICompanyRepository companyRepository) : ICompanyServ
     {
         try
         {
+            var existingCompany = await _companyRepository.GetAsync(c => c.Id == id) ?? throw new Exception($"Company with ID {id} does not exist.");
+
             var deleteCompany = await _companyRepository.DeleteAsync(c => c.Id == id);
-            return deleteCompany;
+            if(!deleteCompany) 
+                throw new Exception($"Error deleting Company with ID {id}");
+
+            return true;
         }
         catch (Exception ex)
         {

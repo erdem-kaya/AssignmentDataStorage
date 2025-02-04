@@ -1,5 +1,4 @@
-﻿using Business.Dtos.Create;
-using Business.Models.ContactPersons;
+﻿using Business.Models.ContactPersons;
 
 namespace Business.Models.Companies;
 

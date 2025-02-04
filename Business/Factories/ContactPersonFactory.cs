@@ -13,7 +13,7 @@ public class ContactPersonFactory
     };
 
 
-    public static ContactPerson CreateFromEntity(ContactPersonEntity entity) => new()
+    public static ContactPerson Create(ContactPersonEntity entity) => new()
     {
         Id = entity.Id,
         CustomerId = entity.CustomerId,
