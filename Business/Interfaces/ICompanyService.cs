@@ -1,9 +1,17 @@
 ﻿using Business.Dtos;
+using Business.Dtos.Create;
+using Business.Dtos.Update;
 using Data.Entities;
+using System.Linq.Expressions;
 
 namespace Business.Interfaces;
 
-public interface ICompanyService : IBaseService<CompanyEntity>
+public interface ICompanyService
 {
-    Task<CompanyEntity?> CreateCompanyAsync(CompanyRegistrationForm companyRegistrationForm);
+    Task<IEnumerable<Company>> GetAllAsync(Expression<Func<CompanyEntity, bool>>? expression = null);
+    Task<Company?> GetAsync(int id);
+    Task<Company?> CreateAsync(CompanyRegistrationForm companyRegistrationForm);
+    Task<Company?> UpdateAsync(CompanyUpdateForm companyUpdateForm);
+    Task<bool> DeleteAsync(int id);
 }
+
