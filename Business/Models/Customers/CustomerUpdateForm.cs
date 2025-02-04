@@ -1,4 +1,4 @@
-﻿namespace Business.Dtos;
+﻿namespace Business.Models.Customers;
 
 public class CustomerUpdateForm : CustomerRegistrationForm
 {

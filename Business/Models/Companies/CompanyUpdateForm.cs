@@ -1,6 +1,4 @@
-﻿using Business.Dtos.Create;
-
-namespace Business.Dtos.Update;
+﻿namespace Business.Models.Companies;
 
 public class CompanyUpdateForm : CompanyRegistrationForm
 {

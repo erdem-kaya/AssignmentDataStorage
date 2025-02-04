@@ -1,8 +1,6 @@
-﻿using Business.Dtos;
-using Business.Dtos.Create;
-using Business.Dtos.Update;
-using Business.Factories;
+﻿using Business.Factories;
 using Business.Interfaces;
+using Business.Models.Companies;
 using Data.Entities;
 using Data.Interfaces;
 using System.Diagnostics;

@@ -1,4 +1,4 @@
-﻿namespace Business.Dtos.Create;
+﻿namespace Business.Models.ContactPersons;
 
 public class ContactPersonRegistrationForm
 {

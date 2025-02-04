@@ -1,6 +1,4 @@
-﻿using Business.Dtos;
-using Business.Dtos.Create;
-using Business.Dtos.Update;
+﻿using Business.Models.ContactPersons;
 using Data.Entities;
 
 namespace Business.Factories;
@@ -14,13 +12,6 @@ public class ContactPersonFactory
         Title = form.Title
     };
 
-    public static ContactPersonEntity Update(ContactPersonUpdateForm form) => new()
-    {
-        Id = form.Id,
-        CustomerId = form.CustomerId,
-        CompanyId = form.CompanyId,
-        Title = form.Title
-    };
 
     public static ContactPerson CreateFromEntity(ContactPersonEntity entity) => new()
     {
@@ -29,4 +20,12 @@ public class ContactPersonFactory
         CompanyId = entity.CompanyId,
         Title = entity.Title
     };
+
+    public static void Update(ContactPersonEntity entity,ContactPersonUpdateForm form)
+    {
+        entity.Id = form.Id;
+        entity.CustomerId = form.CustomerId;
+        entity.CompanyId = form.CompanyId;
+        entity.Title = form.Title;
+    }
 }

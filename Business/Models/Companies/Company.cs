@@ -1,6 +1,7 @@
 ﻿using Business.Dtos.Create;
+using Business.Models.ContactPersons;
 
-namespace Business.Dtos;
+namespace Business.Models.Companies;
 
 public class Company
 {

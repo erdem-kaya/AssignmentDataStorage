@@ -1,6 +1,4 @@
-﻿using Business.Dtos;
-using Business.Dtos.Create;
-using Business.Dtos.Update;
+﻿using Business.Models.Companies;
 using Data.Entities;
 
 namespace Business.Factories;
