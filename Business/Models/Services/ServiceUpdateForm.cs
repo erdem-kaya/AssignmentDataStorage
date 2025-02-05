@@ -1,4 +1,4 @@
-﻿namespace Business.Dtos;
+﻿namespace Business.Models.Services;
 
 public class ServiceUpdateForm : ServiceRegistrationForm
 {

@@ -26,5 +26,4 @@ public static class EmployeeFactory
         entity.LastName = form.LastName;
         entity.RoleId = form.RoleId;
     }
-
 }

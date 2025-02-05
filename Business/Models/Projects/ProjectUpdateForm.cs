@@ -1,4 +1,4 @@
-﻿namespace Business.Dtos;
+﻿namespace Business.Models.Projects;
 
 public class ProjectUpdateForm : ProjectRegistrationForm
 {
