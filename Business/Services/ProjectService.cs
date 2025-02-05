@@ -97,4 +97,27 @@ public class ProjectService(IProjectRepository projectRepository) : IProjectServ
             return false;
         }
     }
+
+    // Update project status. Men jag är inte säker på att det här är rätt sätt att göra det.
+    public async Task<bool> UpdateProjectStatus(int projectId, int projectStatusTypeId)
+    {
+        try
+        {
+            var existingProject = await _projectRepository.GetAsync(pu => pu.Id == projectId);
+            if (existingProject == null)
+                return false;
+
+            existingProject.Id = projectStatusTypeId;
+
+            var updateProjectStatus = await _projectRepository.UpdateAsync(pu => pu.Id == existingProject.Id, existingProject);
+            return updateProjectStatus != null;
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"Error Status update Project entity : {ex.Message}");
+            return false;
+        }
+    }
 }
+
+

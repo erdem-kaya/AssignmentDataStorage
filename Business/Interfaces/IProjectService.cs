@@ -11,4 +11,6 @@ public interface IProjectService
     Task<Project?> CreateAsync(ProjectRegistrationForm projectRegistrationForm);
     Task<Project?> UpdateAsync(ProjectUpdateForm projectUpdateForm);
     Task<bool> DeleteAsync(int id);
+
+    Task<bool> UpdateProjectStatus(int projectId, int projectStatusId);
 }
