@@ -1,8 +1,11 @@
 ﻿using Business.Factories;
 using Business.Interfaces;
 using Business.Models.Roles;
+using Data.Entities;
 using Data.Interfaces;
+using Data.Repositories;
 using System.Diagnostics;
+using System.Linq.Expressions;
 
 namespace Business.Services;
 
@@ -89,5 +92,10 @@ public class RoleService(IRoleRepository roleRepository) : IRoleService
             Debug.WriteLine($"Error deleting Role entity : {ex.Message}");
             return false;
         }
+    }
+
+    public async Task<bool> RoleExists(Expression<Func<RoleEntity, bool>> expression)
+    {
+        return await _roleRepository.ExistsAsync(expression);
     }
 }

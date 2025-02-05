@@ -3,6 +3,7 @@ using Business.Interfaces;
 using Business.Models.Services;
 using Data.Entities;
 using Data.Interfaces;
+using Data.Repositories;
 using System.Diagnostics;
 using System.Linq.Expressions;
 
@@ -100,5 +101,10 @@ public class ServiceService(IServiceRepository serviceRepository) : IServiceServ
             Debug.WriteLine($"Error deleting Service entity : {ex.Message}");
             return false;
         }
+    }
+
+    public async Task<bool> ServiceExists(Expression<Func<ServiceEntity, bool>> expression)
+    {
+        return await _serviceRepository.ExistsAsync(expression);
     }
 }

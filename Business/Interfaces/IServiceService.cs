@@ -11,4 +11,5 @@ public interface IServiceService
     Task<Service?> CreateAsync(ServiceRegistrationForm serviceRegistrationForm);
     Task<Service?> UpdateAsync(ServiceUpdateForm serviceUpdateForm);
     Task<bool> DeleteAsync(int id);
+    Task<bool> ServiceExists(Expression<Func<ServiceEntity, bool>> expression);
 }

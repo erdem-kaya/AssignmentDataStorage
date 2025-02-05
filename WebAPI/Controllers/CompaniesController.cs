@@ -66,7 +66,7 @@ public class CompaniesController(ICompanyService companyService) : ControllerBas
     {
         var company = await _companyService.GetAsync(id);
         if (company == null)
-            return NotFound("No companies registered with this ID");
+            return NotFound($"No companies registered with this ID : {id}");
         var deleted = await _companyService.DeleteAsync(id);
         return deleted ? Ok("Company deleted") : Problem($"Delete failed for Company ID: {id}");
     }
