@@ -17,7 +17,5 @@ public class Project
     public int ServiceId { get; set; }
     public Customer? Customer { get; set; }
     public Employee? LeadEmployee { get; set; }
-    public StatusType? StatusType { get; set; }
     public Service? Service { get; set; }
-    public ICollection<ProjectEmployee> ProjectEmployees { get; set; } = new List<ProjectEmployee>();
 }

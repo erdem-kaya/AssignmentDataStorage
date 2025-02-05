@@ -9,5 +9,6 @@ public interface IBaseRepository<TEntity> where TEntity : class
     Task<TEntity?> CreateAsync(TEntity entity);
     Task<TEntity?> UpdateAsync(Expression<Func<TEntity, bool>> expression, TEntity updatedEntity);
     Task<bool> DeleteAsync(Expression<Func<TEntity, bool>> expression);
+    Task<bool> ExistsAsync(Expression<Func<TEntity, bool>> expression);
 }
 

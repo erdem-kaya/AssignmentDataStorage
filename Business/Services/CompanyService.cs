@@ -102,4 +102,9 @@ public class CompanyService(ICompanyRepository companyRepository) : ICompanyServ
             return false;
         }
     }
+
+    public async Task<bool> CompanyExists(Expression<Func<CompanyEntity, bool>> expression)
+    {
+        return await _companyRepository.ExistsAsync(expression);
+    }
 }

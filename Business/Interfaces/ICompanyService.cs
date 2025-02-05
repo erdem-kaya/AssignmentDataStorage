@@ -11,4 +11,5 @@ public interface ICompanyService
     Task<Company?> CreateAsync(CompanyRegistrationForm companyRegistrationForm);
     Task<Company?> UpdateAsync(CompanyUpdateForm companyUpdateForm);
     Task<bool> DeleteAsync(int id);
+    Task<bool> CompanyExists(Expression<Func<CompanyEntity, bool>> expression);
 }

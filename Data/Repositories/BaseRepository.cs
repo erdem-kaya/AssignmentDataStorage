@@ -110,4 +110,21 @@ public abstract class BaseRepository<TEntity>(DataContext context) : IBaseReposi
             return false;
         }
     }
+
+    //Kanske jag ska använda den för validering....
+    public virtual async Task<bool> ExistsAsync(Expression<Func<TEntity, bool>> expression)
+    {
+        if (expression == null)
+            return false;
+        try
+        {
+            var entity = await _dbSet.AnyAsync(expression);
+            return entity;
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"Error checking if {nameof(TEntity)} entity exists : {ex.Message}");
+            return false;
+        }
+    }
 }
