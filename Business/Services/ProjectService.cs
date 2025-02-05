@@ -32,7 +32,7 @@ public class ProjectService(IProjectRepository projectRepository) : IProjectServ
     {
         try
         {
-            var allProjects = await _projectRepository.GetAllAsync(expression);
+            var allProjects = await _projectRepository.GetAllAsync();
             return allProjects.Select(ProjectFactory.Create).ToList();
         }
         catch (Exception ex)
