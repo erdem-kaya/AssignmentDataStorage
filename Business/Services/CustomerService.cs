@@ -26,11 +26,11 @@ public class CustomerService(ICustomerRepository customerRepository) : ICustomer
             return null!;
         }
     }
-    public async Task<IEnumerable<Customer>> GetAllAsync(Expression<Func<CustomerEntity, bool>>? expression = null)
+    public async Task<IEnumerable<Customer>> GetAllAsync()
     {
         try
         {
-            var allCustomers = await _customerRepository.GetAllAsync(expression);
+            var allCustomers = await _customerRepository.GetAllAsync();
             return allCustomers.Select(CustomerFactory.Create).ToList();
         }
         catch (Exception ex)

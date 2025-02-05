@@ -20,10 +20,15 @@ public static class ServiceFactory
         UnitId = entity.UnitId,
     };
 
-    public static void Update(ServiceEntity entity, ServiceUpdateForm form)
+    public static ServiceEntity Update(ServiceEntity entity, ServiceUpdateForm form)
     {
-        entity.ServiceName = form.ServiceName;
-        entity.Price = form.Price;
-        entity.UnitId = form.UnitId;
+        // Jag gjorde en ändring till Update på ChatGpts rekommendation. Jag håller ID som det är och uppdaterar bara de andra fälten. 
+        return new ServiceEntity
+        {
+            Id = entity.Id,
+            ServiceName = form.ServiceName,
+            Price = form.Price,
+            UnitId = form.UnitId,
+        };
     }
 }

@@ -28,11 +28,11 @@ public class CompanyService(ICompanyRepository companyRepository) : ICompanyServ
         }
     }
 
-    public async Task<IEnumerable<Company>> GetAllAsync(Expression<Func<CompanyEntity, bool>>? expression = null)
+    public async Task<IEnumerable<Company>> GetAllAsync()
     {
         try
         {
-            var allCompanies = await _companyRepository.GetAllAsync(expression);
+            var allCompanies = await _companyRepository.GetAllAsync();
             //Jag är inte saker på om denna kod är korrekt. Jag ska kolla när Presentation lagret är klart
             return allCompanies.Select(CompanyFactory.Create).ToList();
         }

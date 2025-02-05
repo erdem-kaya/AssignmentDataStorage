@@ -30,11 +30,11 @@ public class EmployeeService(IEmployeeRepository employeeRepository) : IEmployee
     }
 
 
-    public async Task<IEnumerable<Employee>> GetAllAsync(Expression<Func<EmployeeEntity, bool>>? expression = null)
+    public async Task<IEnumerable<Employee>> GetAllAsync()
     {
         try
         {
-            var allEmployees = await _employeeRepository.GetAllAsync(expression);
+            var allEmployees = await _employeeRepository.GetAllAsync();
             return allEmployees.Select(EmployeeFactory.Create).ToList();
         }
         catch (Exception ex)

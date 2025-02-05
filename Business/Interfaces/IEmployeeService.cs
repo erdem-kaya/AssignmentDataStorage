@@ -6,7 +6,7 @@ namespace Business.Interfaces;
 
 public interface IEmployeeService
 {
-    Task<IEnumerable<Employee>> GetAllAsync(Expression<Func<EmployeeEntity, bool>>? expression = null);
+    Task<IEnumerable<Employee>> GetAllAsync();
     Task<Employee?> GetAsync(int id);
     Task<Employee?> CreateAsync(EmployeeRegistrationForm employeeRegistrationForm);
     Task<Employee?> UpdateAsync(EmployeeUpdateForm employeeUpdateForm);

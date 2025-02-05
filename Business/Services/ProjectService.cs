@@ -28,7 +28,7 @@ public class ProjectService(IProjectRepository projectRepository) : IProjectServ
     }
 
 
-    public async Task<IEnumerable<Project>> GetAllAsync(Expression<Func<ProjectEntity, bool>>? expression = null)
+    public async Task<IEnumerable<Project>> GetAllAsync()
     {
         try
         {

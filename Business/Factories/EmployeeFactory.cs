@@ -20,10 +20,15 @@ public static class EmployeeFactory
         RoleId = entity.RoleId,
     };
 
-    public static void Update(EmployeeEntity entity, EmployeeUpdateForm form)
+    public static EmployeeEntity Update(EmployeeEntity entity, EmployeeUpdateForm form)
     {
-        entity.FirstName = form.FirstName;
-        entity.LastName = form.LastName;
-        entity.RoleId = form.RoleId;
+        // Jag gjorde en ändring till Update på ChatGpts rekommendation. Jag håller ID som det är och uppdaterar bara de andra fälten. 
+        return new EmployeeEntity
+        {
+            Id = entity.Id,
+            FirstName = form.FirstName,
+            LastName = form.LastName,
+            RoleId = form.RoleId,
+        };
     }
 }

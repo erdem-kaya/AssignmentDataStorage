@@ -6,7 +6,7 @@ namespace Business.Interfaces;
 
 public interface IProjectService
 {
-    Task<IEnumerable<Project>> GetAllAsync(Expression<Func<ProjectEntity, bool>>? expression = null);
+    Task<IEnumerable<Project>> GetAllAsync();
     Task<Project?> GetAsync(int id);
     Task<Project?> CreateAsync(ProjectRegistrationForm projectRegistrationForm);
     Task<Project?> UpdateAsync(ProjectUpdateForm projectUpdateForm);

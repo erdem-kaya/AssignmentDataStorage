@@ -28,13 +28,18 @@ public static class CustomerFactory
         Projects = entity.Projects?.Select(ProjectFactory.Create).ToList() ?? []
     };
 
-    public static void Update(CustomerEntity entity, CustomerUpdateForm form)
+    public static CustomerEntity Update(CustomerEntity entity, CustomerUpdateForm form)
     {
-        entity.FirstName = form.FirstName;
-        entity.LastName = form.LastName;
-        entity.Email = form.Email;
-        entity.PhoneNumber = form.PhoneNumber;
-        entity.CustomerTypeId = form.CustomerTypeId;
-        entity.IsCompany = form.IsCompany;
+        // Jag gjorde en ändring till Update på ChatGpts rekommendation. Jag håller ID som det är och uppdaterar bara de andra fälten. 
+        return new CustomerEntity
+        {
+            Id = entity.Id,
+            FirstName = form.FirstName,
+            LastName = form.LastName,
+            Email = form.Email,
+            PhoneNumber = form.PhoneNumber,
+            CustomerTypeId = form.CustomerTypeId,
+            IsCompany = form.IsCompany
+        };
     }
 }

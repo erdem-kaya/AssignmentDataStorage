@@ -6,7 +6,7 @@ namespace Business.Interfaces;
 
 public interface IServiceService
 {
-    Task<IEnumerable<Service>> GetAllAsync(Expression<Func<ServiceEntity, bool>>? expression = null);
+    Task<IEnumerable<Service>> GetAllAsync();
     Task<Service?> GetAsync(int id);
     Task<Service?> CreateAsync(ServiceRegistrationForm serviceRegistrationForm);
     Task<Service?> UpdateAsync(ServiceUpdateForm serviceUpdateForm);

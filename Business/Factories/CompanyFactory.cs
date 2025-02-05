@@ -23,11 +23,15 @@ public static class CompanyFactory
         ContactPersons = entity.ContactPersons?.Select(ContactPersonFactory.Create).ToList() ?? []
     };
 
-    public static void Update(CompanyEntity entity, CompanyUpdateForm form)
+    public static CompanyEntity Update(CompanyEntity entity, CompanyUpdateForm form)
     {
-        //Jag ändrade koden här eftersom den aktuella enheten bör uppdateras med de nya värdena från formuläret.Den ska inte skapa en ny enhet.
-        entity.CompanyName = form.CompanyName;
-        entity.Address = form.Address;
-        entity.CompanyPhone = form.CompanyPhone;
+        // Jag gjorde en ändring till Update på ChatGpts rekommendation. Jag håller ID som det är och uppdaterar bara de andra fälten.
+        return new CompanyEntity
+       {
+           Id = entity.Id,
+           CompanyName = form.CompanyName,
+           Address = form.Address,
+           CompanyPhone = form.CompanyPhone,
+       };
     }
 }

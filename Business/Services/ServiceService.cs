@@ -30,11 +30,11 @@ public class ServiceService(IServiceRepository serviceRepository) : IServiceServ
         }
     }
 
-    public async Task<IEnumerable<Service>> GetAllAsync(Expression<Func<ServiceEntity, bool>>? expression = null)
+    public async Task<IEnumerable<Service>> GetAllAsync()
     {
         try
         {
-            var allServices = await _serviceRepository.GetAllAsync(expression);
+            var allServices = await _serviceRepository.GetAllAsync();
             return allServices.Select(ServiceFactory.Create).ToList();
         }
         catch (Exception ex)

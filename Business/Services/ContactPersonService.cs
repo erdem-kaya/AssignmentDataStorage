@@ -29,13 +29,11 @@ public class ContactPersonService(IContactPersonRepository contactPersonReposito
         }
     }
 
-    public async Task<IEnumerable<ContactPerson>> GetAllAsync(Expression<Func<ContactPersonEntity, bool>>? expression = null)
+    public async Task<IEnumerable<ContactPerson>> GetAllAsync()
     {
-        if (expression == null)
-            return null!;
         try
         {
-            var allContactPersons = await _contactPersonRepository.GetAllAsync(expression);
+            var allContactPersons = await _contactPersonRepository.GetAllAsync();
             return allContactPersons.Select(ContactPersonFactory.Create).ToList();
         }
         catch (Exception ex)
