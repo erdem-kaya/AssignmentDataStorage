@@ -18,15 +18,11 @@ public static class RoleFactory
         RoleName = entity.RoleName,
     };
 
-    public static RoleEntity Update(RoleEntity entity, RoleUpdateForm form)
+    public static void Update(RoleEntity entity, RoleUpdateForm form)
     {
-        // Jag gjorde en ändring till Update på ChatGpts rekommendation. Jag håller ID som det är och uppdaterar bara de andra fälten.
-        return new RoleEntity
-        {
-            Id = entity.Id,
-            Department = form.Department,
-            RoleName = form.RoleName,
-        };
+        entity.Id = entity.Id;
+        entity.Department = form.Department;
+        entity.RoleName = form.RoleName;
     }
 
 }

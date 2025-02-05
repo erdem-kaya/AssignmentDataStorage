@@ -29,20 +29,16 @@ public static class ProjectFactory
         StatusTypeId = entity.StatusTypeId,
         ServiceId = entity.ServiceId,
     };
-    public static ProjectEntity Update(ProjectEntity entity, ProjectUpdateForm form)
+    public static void Update(ProjectEntity entity, ProjectUpdateForm form)
     {
-        // Jag gjorde en ändring till Update på ChatGpts rekommendation. Jag håller ID som det är och uppdaterar bara de andra fälten. 
-        return new ProjectEntity
-       {
-           Id = entity.Id,
-           Title = form.Title,
-           Description = form.Description,
-           StartDate = form.StartDate,
-           EndDate = form.EndDate,
-           CustomerId = form.CustomerId,
-           LeadEmployeeId = form.LeadEmployeeId,
-           StatusTypeId = form.StatusTypeId,
-           ServiceId = form.ServiceId,
-       };
+        entity.Id = entity.Id;
+        entity.Title = form.Title;
+        entity.Description = form.Description;
+        entity.StartDate = form.StartDate;
+        entity.EndDate = form.EndDate;
+        entity.CustomerId = form.CustomerId;
+        entity.LeadEmployeeId = form.LeadEmployeeId;
+        entity.StatusTypeId = form.StatusTypeId;
+        entity.ServiceId = form.ServiceId;
     }
 }

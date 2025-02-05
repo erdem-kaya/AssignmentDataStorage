@@ -21,15 +21,11 @@ public class ContactPersonFactory
         Title = entity.Title
     };
 
-    public static ContactPersonEntity Update(ContactPersonEntity entity,ContactPersonUpdateForm form)
+    public static void Update(ContactPersonEntity entity,ContactPersonUpdateForm form)
     {
-        // Jag gjorde en ändring till Update på ChatGpts rekommendation. Jag håller ID som det är och uppdaterar bara de andra fälten. 
-        return new ContactPersonEntity
-        {
-            Id = entity.Id,
-            CustomerId = entity.CustomerId,
-            CompanyId = entity.CompanyId,
-            Title = form.Title
-        };
+        entity.Id = entity.Id;
+        entity.CustomerId = form.CustomerId;
+        entity.CompanyId = form.CompanyId;
+        entity.Title = form.Title;
     }
 }
