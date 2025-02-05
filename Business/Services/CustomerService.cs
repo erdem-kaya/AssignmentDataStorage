@@ -3,6 +3,7 @@ using Business.Interfaces;
 using Business.Models.Customers;
 using Data.Entities;
 using Data.Interfaces;
+using Data.Repositories;
 using System.Diagnostics;
 using System.Linq.Expressions;
 
@@ -94,5 +95,10 @@ public class CustomerService(ICustomerRepository customerRepository) : ICustomer
             Debug.WriteLine($"Error deleting Customer entity : {ex.Message}");
             return false;
         }
+    }
+
+    public async Task<bool> CustomerExists(Expression<Func<CustomerEntity, bool>> expression)
+    {
+        return await _customerRepository.ExistsAsync(expression);
     }
 }

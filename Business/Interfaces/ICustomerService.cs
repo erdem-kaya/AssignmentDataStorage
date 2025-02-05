@@ -11,4 +11,5 @@ public interface ICustomerService
     Task<Customer?> CreateAsync(CustomerRegistrationForm customerRegistrationForm);
     Task<Customer?> UpdateAsync(CustomerUpdateForm customerUpdateForm);
     Task<bool> DeleteAsync(int id);
+    Task<bool> CustomerExists(Expression<Func<CustomerEntity, bool>> expression);
 }
