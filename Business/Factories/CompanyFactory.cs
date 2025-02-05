@@ -1,5 +1,6 @@
 ﻿using Business.Models.Companies;
 using Data.Entities;
+using System.Net.NetworkInformation;
 
 namespace Business.Factories;
 
