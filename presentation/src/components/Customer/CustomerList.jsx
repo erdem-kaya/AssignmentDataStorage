@@ -1,7 +1,6 @@
 import React from 'react';
 import { FaEdit, FaTrash } from 'react-icons/fa';
-
-
+import { Link } from 'react-router-dom';
 
 const CustomerList = ({ customers, onEdit, onDelete }) => {
   return (
@@ -15,16 +14,18 @@ const CustomerList = ({ customers, onEdit, onDelete }) => {
               {customer.email} - {customer.phoneNumber}
             </div>
             <div>
-              <button 
+              <Link 
+                to={`/update-customer/${customer.id}`} 
                 className="btn btn-info btn-sm mx-1" 
-                onClick={() => onEdit(customer.id)} 
-                title="Uppdatera">
+                title="Uppdatera"
+              >
                 <FaEdit />
-              </button>
+              </Link>
               <button 
                 className="btn btn-danger btn-sm mx-1" 
                 onClick={() => onDelete(customer.id)} 
-                title="Radera">
+                title="Radera"
+              >
                 <FaTrash />
               </button>
             </div>

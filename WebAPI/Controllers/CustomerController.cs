@@ -71,9 +71,7 @@ namespace WebAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCustomer(int id)
         {
-            //var customer = await _customerService.GetAsync(id);
-            //if (customer == null)
-            //    return NotFound($"No customers registered with ID: {id}");
+           
 
             var deleted = await _customerService.DeleteAsync(id);
             return deleted ? Ok("Customer deleted") : NotFound($"Delete failed for Customer ID: {id}");

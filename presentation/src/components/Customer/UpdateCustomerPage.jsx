@@ -1,100 +1,80 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
-import CustomerList from './CustomerList';
+import { useParams, useNavigate } from 'react-router-dom';
 
-const CustomerPage = () => {
+const UpdateCustomerPage = () => {
+  const { id } = useParams();
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
     email: '',
     phoneNumber: '',
     customerType: 'Privat',
+    customerTypeId: 1,
   });
 
-  const [customers, setCustomers] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const apiUrl = `https://localhost:7181/api/customers/${id}`;
+  const navigate = useNavigate();
 
-  const apiUrl = 'https://localhost:7181/api/customers';
+  useEffect(() => {
+    const fetchCustomerData = async () => {
+      try {
+        const response = await axios.get(apiUrl);
+        setFormData({
+          ...response.data,
+          customerType: response.data.isCompany ? 'Företag' : 'Privat',
+          customerTypeId: response.data.isCompany ? 2 : 1,
+        });
+      } catch (error) {
+        console.error('Error fetching customer data:', error);
+      }
+    };
+
+    fetchCustomerData();
+  }, [id]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+    if (name === 'customerType') {
+      setFormData({
+        ...formData,
+        [name]: value,
+        customerTypeId: value === 'Privat' ? 1 : 2,
+      });
+    } else {
+      setFormData({
+        ...formData,
+        [name]: value,
+      });
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
-    const customerTypeId = formData.customerType === 'Privat' ? 1 : 2;
-    const isCompany = formData.customerType === 'Företag';
 
-    const newCustomer = { 
+    const updatedCustomer = {
       ...formData,
-      customerTypeId,
-      IsCompany: isCompany,
+      isCompany: formData.customerType === 'Företag',
     };
-  
+
     try {
-      const response = await axios.post(apiUrl, newCustomer, {
+      const response = await axios.put(apiUrl, updatedCustomer, {
         headers: {
           'Content-Type': 'application/json',
         },
       });
-      console.log('Kunden har lagts till i systemet:', response.data);
-      setFormData({ firstName: '', lastName: '', email: '', phoneNumber: '', customerType: 'Privat' });
-      fetchCustomers();
+      console.log('Customer updated:', response.data);
+      navigate('/customer');
     } catch (error) {
-      console.error('Det uppstod ett fel när kunden lades till i systemet:', error.response ? error.response.data : error.message);
+      console.error('Error updating customer:', error);
     }
   };
-
-  const fetchCustomers = async () => {
-    setLoading(true);
-    try {
-      const response = await axios.get(apiUrl);
-      setCustomers(response.data);
-      setLoading(false);
-    } catch (error) {
-      console.error('Ett fel uppstod när kundlistan hämtades:', error);
-      setLoading(false);
-    }
-  };
-
-  const handleEdit = (id) => {
-    console.log(`Edit customer with ID: ${id}`);
-  };
-  
-  const handleDelete = async (id) => {
-    console.log(`Delete customer with ID: ${id}`);
-    const deleteCustomer = window.confirm('Är du säker på att du vill radera kunden?');
-    if (deleteCustomer) {
-      try {
-        const response = await axios.delete(`${apiUrl}/${id}`);
-        console.log('Kunden har raderats:', response.data);
-        fetchCustomers();
-      } catch (error) {
-        console.error('Det uppstod ett fel när kunden raderades:', error.response ? error.response.data : error.message);
-      }
-    }
-  };
-
-  useEffect(() => {
-    fetchCustomers();
-  }, []);
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
 
   return (
     <div className="container d-flex justify-content-center align-items-center vh-100">
       <div className="col-md-6">
         <div className="d-flex justify-content-between align-items-center mb-4">
-          <h2>Lägg till kund</h2>
-          <Link to="/" className="btn btn-dark">Home</Link>
+          <h2>Update Customer</h2>
         </div>
         <form onSubmit={handleSubmit}>
           <div className="row">
@@ -163,12 +143,11 @@ const CustomerPage = () => {
               <option value="Företag">Företag</option>
             </select>
           </div>
-          <button type="submit" className="btn btn-primary w-100">Lägg till kund</button>
+          <button type="submit" className="btn btn-primary w-100">Update Customer</button>
         </form>
-        <CustomerList customers={customers} onEdit={handleEdit} onDelete={handleDelete}/>
       </div>
     </div>
   );
 };
 
-export default CustomerPage;
+export default UpdateCustomerPage;

@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Home from './views/Home'
 import Registration from './views/Registration'
 import CustomerPage from './components/Customer/CustomerPage'
+import UpdateCustomerPage from './components/Customer/UpdateCustomerPage'; 
 
 function App() {
 
@@ -14,7 +15,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/customer" element={<CustomerPage />} />
         <Route path="/registration" element={<Registration />} />
-
+        <Route path="/update-customer/:id" element={<UpdateCustomerPage />} /> 
       </Routes>
     </BrowserRouter>
   )
