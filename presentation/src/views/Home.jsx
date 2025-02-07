@@ -8,9 +8,9 @@ const Home = () => {
         <Link to="/customer" className="btn btn-dark m-2" style={{ fontSize: '20px', width: '200px' }}>
           Kunder
         </Link>
-        <button className="btn btn-dark m-2" style={{ fontSize: '20px', width: '200px' }}>
-          Lägg till anställd
-        </button>
+        <Link to="/employee" className="btn btn-dark m-2" style={{ fontSize: '20px', width: '200px' }}>
+          Personel
+        </Link>
         <button className="btn btn-dark m-2" style={{ fontSize: '20px', width: '200px' }}>
           Lägg till projekt
         </button>

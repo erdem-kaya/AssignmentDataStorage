@@ -57,10 +57,6 @@ namespace WebAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteEmployee(int id)
         {
-            var employee = await _employeeService.GetAsync(id);
-            if (employee == null)
-                return NotFound($"No employees registered with ID: {id}");
-
             var deleted = await _employeeService.DeleteAsync(id);
             return deleted ? Ok("Employee deleted") : Problem($"Delete failed for Employee ID: {id}");
         }

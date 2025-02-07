@@ -5,6 +5,8 @@ import Home from './views/Home'
 import Registration from './views/Registration'
 import CustomerPage from './components/Customer/CustomerPage'
 import UpdateCustomerPage from './components/Customer/UpdateCustomerPage'; 
+import EmployeePage from './components/Employee/EmployeePage'
+import UpdateEmployeePage from './components/Employee/UptadeEmployeePage'
 
 function App() {
 
@@ -14,8 +16,9 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/customer" element={<CustomerPage />} />
-        <Route path="/registration" element={<Registration />} />
+        <Route path="/employee" element={<EmployeePage />} />
         <Route path="/update-customer/:id" element={<UpdateCustomerPage />} /> 
+        <Route path="/update-employee/:id" element={<UpdateEmployeePage />} />
       </Routes>
     </BrowserRouter>
   )
