@@ -13,11 +13,11 @@ public class CustomerService(ICustomerRepository customerRepository) : ICustomer
 {
     private readonly ICustomerRepository _customerRepository = customerRepository;
 
-    public async Task<Customer?> CreateAsync(CustomerRegistrationForm customerRegistrationForm)
+    public async Task<Customer?> CreateAsync(CustomerRegistrationForm customerRegistrationForm, int customerTypeId)
     {
         try
         {
-            var customerEntity = CustomerFactory.Create(customerRegistrationForm);
+            var customerEntity = CustomerFactory.Create(customerRegistrationForm, customerTypeId);
             var createCustomer = await _customerRepository.CreateAsync(customerEntity);
             return createCustomer != null ? CustomerFactory.Create(createCustomer) : null;
         }

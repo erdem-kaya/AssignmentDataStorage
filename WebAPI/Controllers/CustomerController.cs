@@ -21,7 +21,15 @@ namespace WebAPI.Controllers
             if (customerExists)
                 return Conflict("Customer with this email already exists");
 
-            var customer = await _customerService.CreateAsync(form);
+            //Chatgpt hjälpte mig att skriva om denna switch-sats
+            var customerTypeId = form.CustomerTypeId switch
+            {
+                1 => 1,
+                2 => 2,
+                _ => throw new ArgumentOutOfRangeException(nameof(form.CustomerTypeId), "Invalid customer type ID")
+            };
+
+            var customer = await _customerService.CreateAsync(form, customerTypeId);
             var result = customer != null ? Ok(customer) : Problem("Customer registration failed");
             return result;
         }
@@ -63,12 +71,12 @@ namespace WebAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCustomer(int id)
         {
-            var customer = await _customerService.GetAsync(id);
-            if (customer == null)
-                return NotFound($"No customers registered with ID: {id}");
+            //var customer = await _customerService.GetAsync(id);
+            //if (customer == null)
+            //    return NotFound($"No customers registered with ID: {id}");
 
             var deleted = await _customerService.DeleteAsync(id);
-            return deleted ? Ok("Customer deleted") : Problem($"Delete failed for Customer ID: {id}");
+            return deleted ? Ok("Customer deleted") : NotFound($"Delete failed for Customer ID: {id}");
         }
     }
 }

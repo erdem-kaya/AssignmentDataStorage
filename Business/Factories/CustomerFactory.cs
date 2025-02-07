@@ -5,13 +5,13 @@ namespace Business.Factories;
 
 public static class CustomerFactory
 {
-    public static CustomerEntity Create(CustomerRegistrationForm form) => new()
+    public static CustomerEntity Create(CustomerRegistrationForm form, int customerTypeId) => new()
     {
         FirstName = form.FirstName,
         LastName = form.LastName,
         Email = form.Email,
         PhoneNumber = form.PhoneNumber,
-        CustomerTypeId = form.CustomerTypeId,
+        CustomerTypeId = customerTypeId,
         IsCompany = form.IsCompany
     };
 

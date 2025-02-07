@@ -6,6 +6,21 @@ using Data.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", builder =>
+    {
+        builder.AllowAnyOrigin()
+               .AllowAnyMethod()
+               .AllowAnyHeader();
+    });
+        
+});
+
+
+
+
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 
@@ -30,6 +45,7 @@ builder.Services.AddScoped<IServiceService, ServiceService>();
 
 var app = builder.Build();
 
+app.UseCors("AllowAll");
 app.MapOpenApi();
 app.UseHttpsRedirection();
 app.UseAuthorization();
