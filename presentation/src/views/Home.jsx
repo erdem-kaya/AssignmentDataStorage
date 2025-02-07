@@ -14,6 +14,9 @@ const Home = () => {
         <Link to="/company" className="btn btn-dark m-2" style={{ fontSize: '20px', width: '200px' }}>
           Företag
         </Link>
+        <Link to="/services" className="btn btn-dark m-2" style={{ fontSize: '20px', width: '200px' }}>
+          Tjänsten
+        </Link>
       </div>
     </div>
   )
