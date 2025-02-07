@@ -150,7 +150,7 @@ const CustomerPage = () => {
             </div>
           </div>
           <div className="mb-3">
-            <label htmlFor="customerType" className="form-label">Kundtyp</label>
+            <label htmlFor="customerType" className="form-label">Vänligen välj företag eller privat</label>
             <select
               id="customerType"
               name="customerType"

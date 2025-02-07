@@ -74,7 +74,7 @@ const UpdateCustomerPage = () => {
     <div className="container d-flex justify-content-center align-items-center vh-100">
       <div className="col-md-6">
         <div className="d-flex justify-content-between align-items-center mb-4">
-          <h2>Update Customer</h2>
+          <h2>Uppdatera Kund</h2>
         </div>
         <form onSubmit={handleSubmit}>
           <div className="row">
@@ -130,7 +130,7 @@ const UpdateCustomerPage = () => {
             </div>
           </div>
           <div className="mb-3">
-            <label htmlFor="customerType" className="form-label">Kundtyp</label>
+            <label htmlFor="customerType" className="form-label">Vänligen välj företag eller privat</label>
             <select
               id="customerType"
               name="customerType"
@@ -143,7 +143,7 @@ const UpdateCustomerPage = () => {
               <option value="Företag">Företag</option>
             </select>
           </div>
-          <button type="submit" className="btn btn-primary w-100">Update Customer</button>
+          <button type="submit" className="btn btn-primary w-100">Save</button>
         </form>
       </div>
     </div>

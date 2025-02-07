@@ -11,9 +11,9 @@ const Home = () => {
         <Link to="/employee" className="btn btn-dark m-2" style={{ fontSize: '20px', width: '200px' }}>
           Personel
         </Link>
-        <button className="btn btn-dark m-2" style={{ fontSize: '20px', width: '200px' }}>
-          Lägg till projekt
-        </button>
+        <Link to="/company" className="btn btn-dark m-2" style={{ fontSize: '20px', width: '200px' }}>
+          Företag
+        </Link>
       </div>
     </div>
   )

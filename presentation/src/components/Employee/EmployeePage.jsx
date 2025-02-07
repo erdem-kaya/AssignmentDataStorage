@@ -7,14 +7,14 @@ const EmployeePage = () => {
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
-    roleId: 1,  // Varsayılan roleId
+    roleId: 1,
   });
 
   const [employees, setEmployees] = useState([]);
   const [roles, setRoles] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [showRoleModal, setShowRoleModal] = useState(false); // Modal için state
-  const [newRole, setNewRole] = useState({ department: '', roleName: '' }); // Yeni role bilgisi
+  const [showRoleModal, setShowRoleModal] = useState(false); 
+  const [newRole, setNewRole] = useState({ department: '', roleName: '' }); 
 
   const apiUrl = 'https://localhost:7181/api/employees'; // API URL for employees
   const rolesApiUrl = 'https://localhost:7181/api/roles'; // API URL for roles
@@ -50,7 +50,7 @@ const EmployeePage = () => {
       });
       console.log('Employee added:', response.data);
       setFormData({ firstName: '', lastName: '', roleId: 1 });
-      fetchEmployees();  // Listeyi yenile
+      fetchEmployees();
     } catch (error) {
       console.error('Error adding employee:', error.response ? error.response.data : error.message);
     }
@@ -85,9 +85,9 @@ const EmployeePage = () => {
         },
       });
       console.log('Role added:', response.data);
-      setRoles([...roles, response.data]); // Yeni role'yi listeye ekle
-      setShowRoleModal(false); // Modal'ı kapat
-      setNewRole({ department: '', roleName: '' }); // Yeni role formunu sıfırla
+      setRoles([...roles, response.data]);
+      setShowRoleModal(false); 
+      setNewRole({ department: '', roleName: '' }); 
     } catch (error) {
       console.error('Error adding role:', error);
     }
@@ -99,7 +99,7 @@ const EmployeePage = () => {
       try {
         const response = await axios.delete(`${apiUrl}/${id}`);
         console.log('Employee deleted:', response.data);
-        fetchEmployees();  // Listeyi yenile
+        fetchEmployees();
       } catch (error) {
         console.error('Error deleting employee:', error.response ? error.response.data : error.message);
       }
@@ -119,13 +119,13 @@ const EmployeePage = () => {
     <div className="container d-flex justify-content-center align-items-center vh-100">
       <div className="col-md-6">
         <div className="d-flex justify-content-between align-items-center mb-4">
-          <h2>Add Employee</h2>
+          <h2>Lägg till personal</h2>
           <Link to="/" className="btn btn-dark">Home</Link>
         </div>
         <form onSubmit={handleSubmit}>
           <div className="row">
             <div className="col-md-6 mb-3">
-              <label htmlFor="firstName" className="form-label">First Name</label>
+              <label htmlFor="firstName" className="form-label">Förnamn</label>
               <input
                 type="text"
                 className="form-control"
@@ -137,7 +137,7 @@ const EmployeePage = () => {
               />
             </div>
             <div className="col-md-6 mb-3">
-              <label htmlFor="lastName" className="form-label">Last Name</label>
+              <label htmlFor="lastName" className="form-label">Efternamn</label>
               <input
                 type="text"
                 className="form-control"
@@ -150,7 +150,7 @@ const EmployeePage = () => {
             </div>
           </div>
           <div className="mb-3">
-            <label htmlFor="roleId" className="form-label">Role</label>
+            <label htmlFor="roleId" className="form-label">Avdelning</label>
             <select
               id="roleId"
               name="roleId"
@@ -170,24 +170,24 @@ const EmployeePage = () => {
               className="btn btn-dark mt-2"
               onClick={() => setShowRoleModal(true)}
             >
-              + Add New Role
+              + Lägg till ny roll
             </button>
           </div>
-          <button type="submit" className="btn btn-primary w-100">Add Employee</button>
+          <button type="submit" className="btn btn-primary w-100">Lägg till personal</button>
         </form>
         {showRoleModal && (
           <div className="modal show" style={{ display: 'block' }}>
             <div className="modal-dialog">
               <div className="modal-content">
                 <div className="modal-header">
-                  <h5 className="modal-title">Add New Role</h5>
+                  <h5 className="modal-title">Lägg till ny</h5>
                   <button type="button" className="btn-close" onClick={() => setShowRoleModal(false)}>
                     
                   </button>
                 </div>
                 <div className="modal-body">
                   <div className="mb-3">
-                    <label htmlFor="department" className="form-label">Department</label>
+                    <label htmlFor="department" className="form-label">Avdelning</label>
                     <input
                       type="text"
                       className="form-control"
@@ -199,7 +199,7 @@ const EmployeePage = () => {
                     />
                   </div>
                   <div className="mb-3">
-                    <label htmlFor="roleName" className="form-label">Role Name</label>
+                    <label htmlFor="roleName" className="form-label">Position</label>
                     <input
                       type="text"
                       className="form-control"
@@ -211,7 +211,7 @@ const EmployeePage = () => {
                     />
                   </div>
                   <button type="button" className="btn btn-primary" onClick={handleRoleSubmit}>
-                    Save Role
+                    Spara
                   </button>
                 </div>
               </div>

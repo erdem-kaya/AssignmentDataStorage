@@ -5,7 +5,8 @@ import axios from 'axios';
 
 const CustomerList = ({ customers, onDelete }) => {
   const [loadingList, setLoadingList] = useState(true);
-  const apiUrl = 'https://localhost:7181/api/customers'; // API URL tanımlandı
+  const [customersState, setCustomers] = useState([]);
+  const apiUrl = 'https://localhost:7181/api/customers';
 
   const fetchCustomers = async () => {
     setLoadingList(true);
@@ -24,14 +25,14 @@ const CustomerList = ({ customers, onDelete }) => {
   }, []);
 
   if (loadingList) {
-    return <div>If you cannot see the Customer List after the page has loaded, make sure the WebApi app is running!</div>;
+    return <div>Om du inte kan se kundlistan efter att sidan har laddats, kontrollera att WebApi-appen körs!</div>;
   }
 
   return (
     <div className="container mt-3">
       <h3>Kunder</h3>
       <ul className="list-group">
-        {customers.map((customer) => (
+        {customersState.map((customer) => (
           <li key={customer.id} className="list-group-item d-flex justify-content-between align-items-center">
             <div>
               <strong>{customer.firstName} {customer.lastName}</strong><br />

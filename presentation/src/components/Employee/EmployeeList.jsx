@@ -5,10 +5,9 @@ import { Link } from 'react-router-dom';
 const EmployeeList = ({ employees, roles, onDelete }) => {
   return (
     <div className="container mt-3">
-      <h3>Employee List</h3>
+      <h3>Personel Lista</h3>
       <ul className="list-group">
         {employees.map((employee) => {
-          // RoleId'ye karşılık gelen Role bilgisini bulma
           const employeeRole = roles ? roles.find(role => role.id === employee.roleId) : null;
 
           return (

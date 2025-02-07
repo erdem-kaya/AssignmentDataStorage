@@ -7,15 +7,14 @@ const UpdateEmployeePage = () => {
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
-    roleId: 1, // Varsayılan roleId
+    roleId: 1,
   });
-  const [roles, setRoles] = useState([]); // Role'leri tutacak state
+  const [roles, setRoles] = useState([]);
   const navigate = useNavigate();
 
-  const apiUrl = `https://localhost:7181/api/employees/${id}`; // Employee API URL
-  const rolesApiUrl = 'https://localhost:7181/api/roles'; // Roles API URL
+  const apiUrl = `https://localhost:7181/api/employees/${id}`; 
+  const rolesApiUrl = 'https://localhost:7181/api/roles'; 
 
-  // Role verilerini çekmek
   const fetchRoles = async () => {
     try {
       const response = await axios.get(rolesApiUrl);
@@ -25,14 +24,13 @@ const UpdateEmployeePage = () => {
     }
   };
 
-  // Employee verilerini çekmek
   useEffect(() => {
     const fetchEmployeeData = async () => {
       try {
         const response = await axios.get(apiUrl);
         setFormData({
           ...response.data,
-          roleId: response.data.roleId, // mevcut RoleId'yi formData'ya yerleştir
+          roleId: response.data.roleId,
         });
       } catch (error) {
         console.error('Error fetching employee data:', error);
@@ -40,7 +38,7 @@ const UpdateEmployeePage = () => {
     };
 
     fetchEmployeeData();
-    fetchRoles(); // Roles listesini de çekiyoruz
+    fetchRoles();
   }, [id]);
 
   const handleChange = (e) => {
@@ -65,7 +63,7 @@ const UpdateEmployeePage = () => {
         },
       });
       console.log('Employee updated:', response.data);
-      navigate('/employee'); // Employee sayfasına yönlendir
+      navigate('/employee');
     } catch (error) {
       console.error('Error updating employee:', error);
     }
@@ -80,7 +78,7 @@ const UpdateEmployeePage = () => {
         <form onSubmit={handleSubmit}>
           <div className="row">
             <div className="col-md-6 mb-3">
-              <label htmlFor="firstName" className="form-label">First Name</label>
+              <label htmlFor="firstName" className="form-label">Förnamn</label>
               <input
                 type="text"
                 className="form-control"
@@ -92,7 +90,7 @@ const UpdateEmployeePage = () => {
               />
             </div>
             <div className="col-md-6 mb-3">
-              <label htmlFor="lastName" className="form-label">Last Name</label>
+              <label htmlFor="lastName" className="form-label">Efternamn</label>
               <input
                 type="text"
                 className="form-control"
@@ -105,9 +103,8 @@ const UpdateEmployeePage = () => {
             </div>
           </div>
 
-          {/* Role seçimi */}
           <div className="mb-3">
-            <label htmlFor="roleId" className="form-label">Role</label>
+            <label htmlFor="roleId" className="form-label">Välj Role</label>
             <select
               id="roleId"
               name="roleId"
