@@ -16,8 +16,8 @@ const EmployeePage = () => {
   const [showRoleModal, setShowRoleModal] = useState(false); 
   const [newRole, setNewRole] = useState({ department: '', roleName: '' }); 
 
-  const apiUrl = 'https://localhost:7181/api/employees'; // API URL for employees
-  const rolesApiUrl = 'https://localhost:7181/api/roles'; // API URL for roles
+  const apiUrl = 'https://localhost:7181/api/employees';
+  const rolesApiUrl = 'https://localhost:7181/api/roles';
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -94,7 +94,7 @@ const EmployeePage = () => {
   };
 
   const handleDelete = async (id) => {
-    const deleteEmployee = window.confirm('Are you sure you want to delete this employee?');
+    const deleteEmployee = window.confirm('Är du säker att du vill ta bort den här medarbetaren?');
     if (deleteEmployee) {
       try {
         const response = await axios.delete(`${apiUrl}/${id}`);
@@ -120,7 +120,7 @@ const EmployeePage = () => {
       <div className="col-md-6">
         <div className="d-flex justify-content-between align-items-center mb-4">
           <h2>Lägg till personal</h2>
-          <Link to="/" className="btn btn-dark">Home</Link>
+          <Link to="/" className="btn btn-dark">Hemsida</Link>
         </div>
         <form onSubmit={handleSubmit}>
           <div className="row">

@@ -73,7 +73,7 @@ const UpdateEmployeePage = () => {
     <div className="container d-flex justify-content-center align-items-center vh-100">
       <div className="col-md-6">
         <div className="d-flex justify-content-between align-items-center mb-4">
-          <h2>Update Employee</h2>
+          <h2>Uppdatera anställda</h2>
         </div>
         <form onSubmit={handleSubmit}>
           <div className="row">
@@ -121,7 +121,7 @@ const UpdateEmployeePage = () => {
             </select>
           </div>
 
-          <button type="submit" className="btn btn-primary w-100">Update Employee</button>
+          <button type="submit" className="btn btn-primary w-100">Spara</button>
         </form>
       </div>
     </div>

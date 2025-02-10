@@ -3,14 +3,16 @@ using Business.Interfaces;
 using Business.Models.Projects;
 using Data.Entities;
 using Data.Interfaces;
+using Data.Repositories;
 using System.Diagnostics;
 using System.Linq.Expressions;
 
 namespace Business.Services;
 
-public class ProjectService(IProjectRepository projectRepository) : IProjectService
+public class ProjectService(IProjectRepository projectRepository, IProjectEmployeeService projectEmployeeService) : IProjectService
 {
     private readonly IProjectRepository _projectRepository = projectRepository;
+    private readonly IProjectEmployeeService _projectEmployeeService = projectEmployeeService;
 
     public async Task<Project?> CreateAsync(ProjectRegistrationForm projectRegistrationForm)
     {
@@ -18,6 +20,11 @@ public class ProjectService(IProjectRepository projectRepository) : IProjectServ
         {
             var projectEntity = ProjectFactory.Create(projectRegistrationForm);
             var createProject = await _projectRepository.CreateAsync(projectEntity);
+
+            // Vi måste lägga till den ledande medarbetaren i tabellen ProjectEmployees. 
+            //Att göra det här är inte en bra lösning. Kanske kommer jag att separera det helt härifrån när jag utvecklar projektet i framtiden.
+            await _projectEmployeeService.LeadEmployeeToProjectEmployeesTableAsync(createProject.Id, projectRegistrationForm.LeadEmployeeId);
+
             return createProject != null ? ProjectFactory.Create(createProject) : null!;
         }
         catch (Exception ex)

@@ -43,6 +43,9 @@ builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<IServiceRepository, ServiceRepository>();
 builder.Services.AddScoped<IServiceService, ServiceService>();
 
+builder.Services.AddScoped<IProjectEmployeeRepository, ProjectEmployeeRepository>();
+builder.Services.AddScoped<IProjectEmployeeService, ProjectEmployeeService>();
+
 var app = builder.Build();
 
 app.UseCors("AllowAll");

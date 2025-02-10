@@ -57,7 +57,7 @@ const CompanyPage = () => {
   };
 
   const handleDelete = async (id) => {
-    const deleteCompany = window.confirm('Are you sure you want to delete this company?');
+    const deleteCompany = window.confirm('Är du säker på att du vill ta bort det här företaget?');
     if (deleteCompany) {
       try {
         const response = await axios.delete(`${apiUrl}/${id}`);
@@ -82,7 +82,7 @@ const CompanyPage = () => {
       <div className="col-md-6">
         <div className="d-flex justify-content-between align-items-center mb-4">
           <h2>Lägg till företag</h2>
-          <Link to="/" className="btn btn-dark">Home</Link>
+          <Link to="/" className="btn btn-dark">Hemsidan</Link>
         </div>
         <form onSubmit={handleSubmit}>
           <div className="mb-3">

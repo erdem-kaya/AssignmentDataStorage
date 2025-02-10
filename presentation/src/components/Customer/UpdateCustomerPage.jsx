@@ -143,7 +143,7 @@ const UpdateCustomerPage = () => {
               <option value="Företag">Företag</option>
             </select>
           </div>
-          <button type="submit" className="btn btn-primary w-100">Save</button>
+          <button type="submit" className="btn btn-primary w-100">Spara</button>
         </form>
       </div>
     </div>

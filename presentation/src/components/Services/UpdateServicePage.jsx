@@ -75,7 +75,7 @@ const UpdateServicePage = () => {
     <div className="container d-flex justify-content-center align-items-center vh-100">
       <div className="col-md-6">
         <div className="d-flex justify-content-between align-items-center mb-4">
-          <h2>Update Service</h2>
+          <h2>Uppdatera tjänsten</h2>
         </div>
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
