@@ -63,6 +63,15 @@ public class ProjectsController(IProjectService projectService) : ControllerBase
             var project = await _projectService.GetAsync(id);
             if (project == null)
                 return NotFound($"No projects registered with ID: {id}");
+            
+            if (form.LeadEmployeeId != project.LeadEmployeeId)
+            {
+                await _projectService.UpdateProjectEmployeesByProjectId(id);
+
+            }
+
+            
+
             var updatedProject = await _projectService.UpdateAsync(form);
             return updatedProject != null ? Ok(updatedProject) : Problem($"Update failed for Project ID: {id}");
         }

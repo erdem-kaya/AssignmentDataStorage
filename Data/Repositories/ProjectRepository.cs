@@ -42,5 +42,18 @@ public class ProjectRepository(DataContext context) : BaseRepository<ProjectEnti
             await _context.SaveChangesAsync();
         }
     }
+
+    public async Task UpdateProjectEmployeesByProjectId(int projectId)
+    {
+        var projectEmployees = await _context.ProjectEmployees
+            .Where(pe => pe.ProjectId == projectId)
+            .ToListAsync();
+
+        if (projectEmployees.Any())
+        {
+            _context.ProjectEmployees.UpdateRange(projectEmployees);
+            await _context.SaveChangesAsync();
+        }
+    }
 }
 

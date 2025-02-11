@@ -1,76 +1,120 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 const AddProject = () => {
   const [formData, setFormData] = useState({
-    title: '',
-    description: '',
-    startDate: '',
-    endDate: '',
-    customerId: '',
-    leadEmployeeId: '',
-    statusTypeId: '',
-    serviceId: ''
+    title: "",
+    description: "",
+    startDate: "",
+    endDate: "",
+    customerId: "",
+    leadEmployeeId: "",
+    statusTypeId: "",
+    serviceId: "",
   });
 
   const [customers, setCustomers] = useState([]);
   const [employees, setEmployees] = useState([]);
   const [services, setServices] = useState([]);
+  const [customerType, setCustomerType] = useState("Privat");
+  const [companyName, setCompanyName] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const customerResponse = await axios.get('https://localhost:7181/api/customers');
-        const employeeResponse = await axios.get('https://localhost:7181/api/employees');
-        const serviceResponse = await axios.get('https://localhost:7181/api/services');
+        const customerResponse = await axios.get(
+          "https://localhost:7181/api/customers"
+        );
+        const employeeResponse = await axios.get(
+          "https://localhost:7181/api/employees"
+        );
+        const serviceResponse = await axios.get(
+          "https://localhost:7181/api/services"
+        );
         setCustomers(customerResponse.data);
         setEmployees(employeeResponse.data);
         setServices(serviceResponse.data);
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error("Error fetching data:", error);
       }
     };
 
     fetchData();
   }, []);
 
+  const handleCustomerChange = async (e) => {
+    const customerId = e.target.value;
+    setFormData({
+      ...formData,
+      customerId: customerId,
+    });
+
+    try {
+      const customerResponse = await axios.get(
+        `https://localhost:7181/api/customers/${customerId}`
+      );
+      const customer = customerResponse.data;
+
+      if (customer.isCompany) {
+        setCompanyName(customer.companyName);
+        setCustomerType("Företag");
+      } else {
+        setCustomerType("Privat");
+        setCompanyName("");
+      }
+    } catch (error) {
+      console.error("Error fetching customer data:", error);
+    }
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
-      [name]: value
+      [name]: value,
     });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const newProject = { 
-      ...formData
+    const newProject = {
+      ...formData,
+      customerType: customerType,
+      companyName: companyName,
     };
 
     try {
-      const response = await axios.post('https://localhost:7181/api/projects', newProject, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+      const response = await axios.post(
+        "https://localhost:7181/api/projects",
+        newProject,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
-      console.log('Project added:', response.data);
+      console.log("Project added:", response.data);
 
       setFormData({
-        title: '',
-        description: '',
-        startDate: '',
-        endDate: '',
-        customerId: '',
-        leadEmployeeId: '',
-        statusTypeId: '',
-        serviceId: ''
+        title: "",
+        description: "",
+        startDate: "",
+        endDate: "",
+        customerId: "",
+        leadEmployeeId: "",
+        statusTypeId: "",
+        serviceId: "",
       });
 
+      setCompanyName("");
+      setCustomerType("Privat");
     } catch (error) {
-      console.error('Error adding project:', error.response ? error.response.data : error.message);
+      console.error(
+        "Error adding project:",
+        error.response ? error.response.data : error.message
+      );
     }
   };
 
@@ -79,7 +123,9 @@ const AddProject = () => {
       <h3 className="text-center">Projektregistrering</h3>
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
-          <label htmlFor="title" className="form-label">Titel</label>
+          <label htmlFor="title" className="form-label">
+            Titel
+          </label>
           <input
             type="text"
             className="form-control"
@@ -90,9 +136,10 @@ const AddProject = () => {
             required
           />
         </div>
-
         <div className="mb-3">
-          <label htmlFor="description" className="form-label">Beskrivning</label>
+          <label htmlFor="description" className="form-label">
+            Beskrivning
+          </label>
           <textarea
             className="form-control"
             id="description"
@@ -102,9 +149,10 @@ const AddProject = () => {
             required
           />
         </div>
-
         <div className="mb-3">
-          <label htmlFor="startDate" className="form-label">Startdatum</label>
+          <label htmlFor="startDate" className="form-label">
+            Startdatum
+          </label>
           <input
             type="date"
             className="form-control"
@@ -116,7 +164,9 @@ const AddProject = () => {
           />
         </div>
         <div className="mb-3">
-          <label htmlFor="endDate" className="form-label">Slutdatum</label>
+          <label htmlFor="endDate" className="form-label">
+            Slutdatum
+          </label>
           <input
             type="date"
             className="form-control"
@@ -129,13 +179,15 @@ const AddProject = () => {
         </div>
 
         <div className="mb-3">
-          <label htmlFor="customerId" className="form-label">Kund</label>
+          <label htmlFor="customerId" className="form-label">
+            Kund
+          </label>
           <select
             id="customerId"
             name="customerId"
             className="form-select"
             value={formData.customerId}
-            onChange={handleChange}
+            onChange={handleCustomerChange}
             required
           >
             <option value="">Välj</option>
@@ -145,10 +197,22 @@ const AddProject = () => {
               </option>
             ))}
           </select>
+
+          <div className="mt-2">
+            {formData.customerId === "" ? (
+              <span className="text-muted">* Väntar på kundsnamn</span>
+            ) : customerType === "Företag" ? (
+              <span className="text-muted">{`* Företagskund`}</span>
+            ) : customerType === "Privat" ? (
+              <span className="text-muted">{`* Privatkund`}</span>
+            ) : null}
+          </div>
         </div>
 
         <div className="mb-3">
-          <label htmlFor="leadEmployeeId" className="form-label">Ledande Anställd</label>
+          <label htmlFor="leadEmployeeId" className="form-label">
+            Ledande Anställd
+          </label>
           <select
             id="leadEmployeeId"
             name="leadEmployeeId"
@@ -167,7 +231,9 @@ const AddProject = () => {
         </div>
 
         <div className="mb-3">
-          <label htmlFor="serviceId" className="form-label">Tjänst</label>
+          <label htmlFor="serviceId" className="form-label">
+            Tjänst
+          </label>
           <select
             id="serviceId"
             name="serviceId"
@@ -186,7 +252,9 @@ const AddProject = () => {
         </div>
 
         <div className="mb-3">
-          <label htmlFor="statusTypeId" className="form-label">Status</label>
+          <label htmlFor="statusTypeId" className="form-label">
+            Status
+          </label>
           <select
             id="statusTypeId"
             name="statusTypeId"
@@ -202,7 +270,9 @@ const AddProject = () => {
           </select>
         </div>
 
-        <button type="submit" className="btn btn-primary w-100">Spara</button>
+        <button type="submit" className="btn btn-primary w-100">
+          Spara
+        </button>
       </form>
     </div>
   );

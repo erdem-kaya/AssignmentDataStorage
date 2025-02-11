@@ -147,4 +147,9 @@ public class ProjectService(IProjectRepository projectRepository, IProjectEmploy
     {
         await _projectRepository.DeleteProjectEmployeesByProjectId(projectId);
     }
+
+    public async Task UpdateProjectEmployeesByProjectId(int projectId)
+    {
+        await _projectRepository.UpdateProjectEmployeesByProjectId(projectId);
+    }
 }
