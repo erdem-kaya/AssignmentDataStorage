@@ -33,6 +33,17 @@ public class ProjectsController(IProjectService projectService) : ControllerBase
             return Ok(projects);
         return NotFound("There are no projects to view.");
     }
+    [HttpGet("more-details")]
+    public async Task<IActionResult> GetAllMoreDetails()
+    {
+        var projects = await _projectService.GetAllMoreDetailsFromRepository();
+
+
+
+        if (projects != null)
+            return Ok(projects);
+        return NotFound("There are no projects to view.");
+    }
 
     [HttpGet("{id}")]
     public async Task<IActionResult> GetProjectById(int id)

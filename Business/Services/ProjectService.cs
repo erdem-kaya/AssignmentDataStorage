@@ -1,9 +1,11 @@
 ﻿using Business.Factories;
 using Business.Interfaces;
+using Business.Models.Customers;
 using Business.Models.Projects;
 using Data.Entities;
 using Data.Interfaces;
 using Data.Repositories;
+using Microsoft.Identity.Client;
 using System.Diagnostics;
 using System.Linq.Expressions;
 
@@ -23,7 +25,7 @@ public class ProjectService(IProjectRepository projectRepository, IProjectEmploy
 
             // Vi måste lägga till den ledande medarbetaren i tabellen ProjectEmployees. 
             //Att göra det här är inte en bra lösning. Kanske kommer jag att separera det helt härifrån när jag utvecklar projektet i framtiden.
-            await _projectEmployeeService.LeadEmployeeToProjectEmployeesTableAsync(createProject.Id, projectRegistrationForm.LeadEmployeeId);
+            await _projectEmployeeService.LeadEmployeeToProjectEmployeesTableAsync(createProject!.Id, projectRegistrationForm.LeadEmployeeId);
 
             return createProject != null ? ProjectFactory.Create(createProject) : null!;
         }
@@ -123,8 +125,20 @@ public class ProjectService(IProjectRepository projectRepository, IProjectEmploy
         {
             Debug.WriteLine($"Error Status update Project entity : {ex.Message}");
             return false;
+        }       
+    }
+
+    public async Task<IEnumerable<Project>> GetAllMoreDetailsFromRepository()
+    {
+        try
+        {
+            var getMoreDetailedProjects = await _projectRepository.GetAllMoreDetails();
+            return getMoreDetailedProjects.Select(ProjectFactory.Create).ToList();
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"Error getting detailed projects: {ex.Message}");
+            return null!;
         }
     }
 }
-
-

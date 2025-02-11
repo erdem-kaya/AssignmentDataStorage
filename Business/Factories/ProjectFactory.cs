@@ -3,7 +3,7 @@ using Data.Entities;
 
 namespace Business.Factories;
 
-public static class ProjectFactory 
+public static class ProjectFactory
 {
     public static ProjectEntity Create(ProjectRegistrationForm form) => new()
     {
@@ -28,7 +28,9 @@ public static class ProjectFactory
         LeadEmployeeId = entity.LeadEmployeeId,
         StatusTypeId = entity.StatusTypeId,
         ServiceId = entity.ServiceId,
+        LeadEmployee = entity.LeadEmployee is null ? null : EmployeeFactory.Create(entity.LeadEmployee),  
     };
+
     public static void Update(ProjectEntity entity, ProjectUpdateForm form)
     {
         entity.Id = entity.Id;

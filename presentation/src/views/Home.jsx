@@ -4,9 +4,8 @@ import AddProject from '../components/Project/AddProject';
 
 const Home = () => {
   return (
-    <div className="d-flex flex-column justify-content-center align-items-center vh-100">
+    <div className="d-flex flex-column justify-content-center align-items-center">
       <div className="text-center mb-4">
-        {/* Butonlar */}
         <Link to="/customer" className="btn btn-dark m-2" style={{ fontSize: '20px', width: '200px' }}>
           Kunder
         </Link>
@@ -19,7 +18,7 @@ const Home = () => {
         <Link to="/services" className="btn btn-dark m-2" style={{ fontSize: '20px', width: '200px' }}>
           Tjänsten
         </Link>
-        <Link className="btn btn-dark m-2" style={{ fontSize: '20px', width: '200px' }}>
+        <Link to="/projects" className="btn btn-dark m-2" style={{ fontSize: '20px', width: '200px' }}>
           Alla Projekt
         </Link>
       </div>

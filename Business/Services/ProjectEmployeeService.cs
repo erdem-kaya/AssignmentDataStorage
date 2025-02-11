@@ -36,7 +36,7 @@ public class ProjectEmployeeService(IProjectEmployeeRepository projectEmployeeRe
         catch (Exception ex)
         {
             Debug.WriteLine($"Error adding Lead Employee to project: {ex.Message}");
-            throw;
+            return null!;
         }
     }
 
