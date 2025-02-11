@@ -13,4 +13,5 @@ public interface IProjectService
     Task<bool> DeleteAsync(int id);
     Task<bool> UpdateProjectStatus(int projectId, int projectStatusId);
     Task<IEnumerable<Project>> GetAllMoreDetailsFromRepository();
+    Task DeleteProjectEmployeesByProjectId(int projectId);
 }

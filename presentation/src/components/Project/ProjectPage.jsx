@@ -6,12 +6,12 @@ const ProjectPage = () => {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const apiUrl = 'https://localhost:7181/api/projects'; 
+  const apiUrl = 'https://localhost:7181/api/projects';
 
   const fetchProjectsWithDetails = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(`${apiUrl}/more-details`); 
+      const response = await axios.get(`${apiUrl}/more-details`);
       setProjects(response.data);
       setLoading(false);
     } catch (error) {
@@ -20,8 +20,19 @@ const ProjectPage = () => {
     }
   };
 
+  const handleDelete = async (projectId) => {
+    if (window.confirm('Är du säker på att du vill ta bort det här projektet?')) {
+      try {
+        await axios.delete(`${apiUrl}/${projectId}`);
+        setProjects(projects.filter((project) => project.id !== projectId));
+      } catch (error) {
+        console.error('Error deleting the project:', error);
+      }
+    }
+  };
+
   useEffect(() => {
-    fetchProjectsWithDetails(); 
+    fetchProjectsWithDetails();
   }, []);
 
   if (loading) {

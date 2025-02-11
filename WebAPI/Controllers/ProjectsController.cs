@@ -1,5 +1,6 @@
 ﻿using Business.Interfaces;
 using Business.Models.Projects;
+using Business.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -71,12 +72,17 @@ public class ProjectsController(IProjectService projectService) : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteProject(int id)
     {
-        var project = await _projectService.GetAsync(id);
+       var project = await _projectService.GetAsync(id);
         if (project == null)
             return NotFound($"No projects registered with ID: {id}");
 
-        var result = await _projectService.DeleteAsync(id);
-        return result ? Ok() : Problem($"Delete failed for Project ID: {id}");
+        await _projectService.DeleteProjectEmployeesByProjectId(id);
+       
+        var deleted = await _projectService.DeleteAsync(id);
+
+        return deleted ? Ok("Project deleted") : Problem($"Delete failed for Project ID: {id}");
     }
 
 }
+
+

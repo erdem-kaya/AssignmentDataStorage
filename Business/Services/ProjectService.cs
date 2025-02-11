@@ -5,6 +5,7 @@ using Business.Models.Projects;
 using Data.Entities;
 using Data.Interfaces;
 using Data.Repositories;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Client;
 using System.Diagnostics;
 using System.Linq.Expressions;
@@ -140,5 +141,10 @@ public class ProjectService(IProjectRepository projectRepository, IProjectEmploy
             Debug.WriteLine($"Error getting detailed projects: {ex.Message}");
             return null!;
         }
+    }
+
+    public async Task DeleteProjectEmployeesByProjectId(int projectId)
+    {
+        await _projectRepository.DeleteProjectEmployeesByProjectId(projectId);
     }
 }

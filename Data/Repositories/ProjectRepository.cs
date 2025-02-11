@@ -28,5 +28,19 @@ public class ProjectRepository(DataContext context) : BaseRepository<ProjectEnti
             return [];
         }
     }
+
+    public async Task DeleteProjectEmployeesByProjectId(int projectId)
+    {
+        var projectEmployees = await _context.ProjectEmployees
+            .Where(pe => pe.ProjectId == projectId)
+            .ToListAsync();
+
+        if (projectEmployees.Any())
+        {
+            // ChatGpt hjälpte för RemoveRange
+            _context.ProjectEmployees.RemoveRange(projectEmployees);
+            await _context.SaveChangesAsync();
+        }
+    }
 }
 
