@@ -18,6 +18,7 @@ const AddProject = () => {
   const [services, setServices] = useState([]);
   const [customerType, setCustomerType] = useState("Privat");
   const [companyName, setCompanyName] = useState("");
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -96,6 +97,7 @@ const AddProject = () => {
       );
 
       console.log("Project added:", response.data);
+      setMessage("Projektet har registrerats!");
 
       setFormData({
         title: "",
@@ -115,12 +117,14 @@ const AddProject = () => {
         "Error adding project:",
         error.response ? error.response.data : error.message
       );
+      setMessage("Något gick fel. Försök igen senare.");
     }
   };
 
   return (
     <div>
       <h3 className="text-center">Projektregistrering</h3>
+      {message && <div style={{ marginTop: "20px", color: "green", textAlign: "center" }}>{message}</div>}
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
           <label htmlFor="title" className="form-label">
