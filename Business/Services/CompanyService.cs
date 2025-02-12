@@ -13,16 +13,27 @@ public class CompanyService(ICompanyRepository companyRepository) : ICompanyServ
     private readonly ICompanyRepository _companyRepository = companyRepository;
 
     public async Task<Company?> CreateAsync(CompanyRegistrationForm companyRegistrationForm)
-    {
+    {   
+        if (companyRegistrationForm == null)
+            return null!;
+
+        await _companyRepository.BeginTransactionAsync();
+
         try
         {
             var companyEntity = CompanyFactory.Create(companyRegistrationForm);
             var createCompany = await _companyRepository.CreateAsync(companyEntity);
+
+            await _companyRepository.CommitTransactionAsync();
+
             // ChatGPT hjälpte mig med return createCompany != null ? CompanyFactory.Create(createCompany) : null!;
             return createCompany != null ? CompanyFactory.Create(createCompany) : null!;
+
+            
         }
         catch (Exception ex)
         {
+            await _companyRepository.RollbackTransactionAsync();
             Debug.WriteLine($"Error creating Company entity : {ex.Message}");
             return null!;
         }
