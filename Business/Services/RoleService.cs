@@ -15,14 +15,17 @@ public class RoleService(IRoleRepository roleRepository) : IRoleService
 
     public async Task<Role?> CreateAsync(RolesRegistrationForm rolesRegistrationForm)
     {
+        await _roleRepository.BeginTransactionAsync();
         try
         {
             var roleEntity = RoleFactory.Create(rolesRegistrationForm);
             var createRole = await _roleRepository.CreateAsync(roleEntity);
+            await _roleRepository.CommitTransactionAsync();
             return createRole != null ? RoleFactory.Create(createRole) : null!;
         }
         catch (Exception ex)
         {
+            await _roleRepository.RollbackTransactionAsync();
             Debug.WriteLine($"Error creating Role entity : {ex.Message}");
             return null!;
         }

@@ -15,14 +15,17 @@ public class CustomerService(ICustomerRepository customerRepository) : ICustomer
 
     public async Task<Customer?> CreateAsync(CustomerRegistrationForm customerRegistrationForm, int customerTypeId)
     {
+        await _customerRepository.BeginTransactionAsync();
         try
         {
             var customerEntity = CustomerFactory.Create(customerRegistrationForm, customerTypeId);
             var createCustomer = await _customerRepository.CreateAsync(customerEntity);
+            await _customerRepository.CommitTransactionAsync();
             return createCustomer != null ? CustomerFactory.Create(createCustomer) : null;
         }
         catch (Exception ex)
         {
+            await _customerRepository.RollbackTransactionAsync();
             Debug.WriteLine($"Error creating Customer entity : {ex.Message}");
             return null!;
         }

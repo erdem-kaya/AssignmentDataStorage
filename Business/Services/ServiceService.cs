@@ -17,15 +17,18 @@ public class ServiceService(IServiceRepository serviceRepository) : IServiceServ
 
     public async Task<Service?> CreateAsync(ServiceRegistrationForm serviceRegistrationForm)
     {
+        await _serviceRepository.BeginTransactionAsync();
         try
         {
             var serviceEntity = ServiceFactory.Create(serviceRegistrationForm);
 
             var createService = await _serviceRepository.CreateAsync(serviceEntity);
+            await _serviceRepository.CommitTransactionAsync();
             return createService != null ? ServiceFactory.Create(createService) : null!;
         }
         catch (Exception ex)
         {
+            await _serviceRepository.RollbackTransactionAsync();
             Debug.WriteLine($"Error creating Service entity : {ex.Message}");
             return null!;
         }

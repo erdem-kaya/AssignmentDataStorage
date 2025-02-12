@@ -16,14 +16,19 @@ public class ContactPersonService(IContactPersonRepository contactPersonReposito
     {
         if (contactPersonRegistrationForm == null)
             return null!;
+
+        await _contactPersonRepository.BeginTransactionAsync();
+
         try
         {
             var contactPersonEntity = ContactPersonFactory.Create(contactPersonRegistrationForm);
             var createContactPerson = await _contactPersonRepository.CreateAsync(contactPersonEntity);
+            await _contactPersonRepository.CommitTransactionAsync();
             return createContactPerson != null ? ContactPersonFactory.Create(createContactPerson) : null!;
         }
         catch (Exception ex)
         {
+            await _contactPersonRepository.RollbackTransactionAsync();
             Debug.WriteLine($"Error creating ContactPerson entity : {ex.Message}");
             return null!;
         }

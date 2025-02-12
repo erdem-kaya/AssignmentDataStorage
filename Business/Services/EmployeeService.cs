@@ -17,14 +17,17 @@ public class EmployeeService(IEmployeeRepository employeeRepository) : IEmployee
     {
         try
         {
+            await _employeeRepository.BeginTransactionAsync();
             var employeeEntity = EmployeeFactory.Create(employeeRegistrationForm);
 
             var createEmployee = await _employeeRepository.CreateAsync(employeeEntity);
+            await _employeeRepository.CommitTransactionAsync();
             return createEmployee != null ? EmployeeFactory.Create(createEmployee) : null!;
 
         }
         catch (Exception ex)
         {
+            await _employeeRepository.RollbackTransactionAsync();
             Debug.WriteLine($"Error creating Employee entity : {ex.Message}");
             return null!;
         }
@@ -64,7 +67,7 @@ public class EmployeeService(IEmployeeRepository employeeRepository) : IEmployee
     {
         if (employeeUpdateForm == null)
             return null!;
-
+        await _employeeRepository.BeginTransactionAsync();
         try
         {
             var findUpdateEmployee = await _employeeRepository.GetAsync(e => e.Id == employeeUpdateForm.Id);
@@ -74,10 +77,12 @@ public class EmployeeService(IEmployeeRepository employeeRepository) : IEmployee
             EmployeeFactory.Update(findUpdateEmployee, employeeUpdateForm);
 
             var updateEmployee = await _employeeRepository.UpdateAsync(e => e.Id == findUpdateEmployee.Id, findUpdateEmployee);
+            await _employeeRepository.CommitTransactionAsync();
             return updateEmployee != null ? EmployeeFactory.Create(updateEmployee) : null!;
         }
         catch (Exception ex)
         {
+            await _employeeRepository.RollbackTransactionAsync();
             Debug.WriteLine($"Error updating Employee entity : {ex.Message}");
             return null!;
         }
@@ -85,6 +90,7 @@ public class EmployeeService(IEmployeeRepository employeeRepository) : IEmployee
 
     public async Task<bool> DeleteAsync(int id)
     {
+        await _employeeRepository.BeginTransactionAsync();
         try
         {
             var existingEmployee = await _employeeRepository.GetAsync(e => e.Id == id) ?? throw new Exception($"Company with ID {id} does not exist.");
@@ -92,11 +98,12 @@ public class EmployeeService(IEmployeeRepository employeeRepository) : IEmployee
             var deleteEmployee = await _employeeRepository.DeleteAsync(e => e.Id == id);
             if (!deleteEmployee)
                 throw new Exception($"Error deleting Employee with ID {id}");
-
+            await _employeeRepository.CommitTransactionAsync();
             return true;
         }
         catch (Exception ex)
         {
+            await _employeeRepository.RollbackTransactionAsync();
             Debug.WriteLine($"Error deleting Employee entity : {ex.Message}");
             return false;
         }

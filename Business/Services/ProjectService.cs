@@ -19,6 +19,8 @@ public class ProjectService(IProjectRepository projectRepository, IProjectEmploy
 
     public async Task<Project?> CreateAsync(ProjectRegistrationForm projectRegistrationForm)
     {
+        await _projectRepository.BeginTransactionAsync();
+
         try
         {
             var projectEntity = ProjectFactory.Create(projectRegistrationForm);
@@ -27,11 +29,13 @@ public class ProjectService(IProjectRepository projectRepository, IProjectEmploy
             // Vi måste lägga till den ledande medarbetaren i tabellen ProjectEmployees. 
             //Att göra det här är inte en bra lösning. Kanske kommer jag att separera det helt härifrån när jag utvecklar projektet i framtiden.
             await _projectEmployeeService.LeadEmployeeToProjectEmployeesTableAsync(createProject!.Id, projectRegistrationForm.LeadEmployeeId);
+            await _projectRepository.CommitTransactionAsync();
 
             return createProject != null ? ProjectFactory.Create(createProject) : null!;
         }
         catch (Exception ex)
         {
+            await _projectRepository.RollbackTransactionAsync();
             Debug.WriteLine($"Error creating Project entity : {ex.Message}");
             return null!;
         }
@@ -72,7 +76,7 @@ public class ProjectService(IProjectRepository projectRepository, IProjectEmploy
     {
         if (projectUpdateForm == null)
             return null!;
-
+        await _projectRepository.BeginTransactionAsync();
         try
         {
             var findUpdateProject = await _projectRepository.GetAsync(e => e.Id == projectUpdateForm.Id);
@@ -81,10 +85,12 @@ public class ProjectService(IProjectRepository projectRepository, IProjectEmploy
 
             ProjectFactory.Update(findUpdateProject, projectUpdateForm);
             var updateProject = await _projectRepository.UpdateAsync(e => e.Id == findUpdateProject.Id, findUpdateProject);
+            await _projectRepository.CommitTransactionAsync();
             return updateProject != null ? ProjectFactory.Create(updateProject) : null!;
         }
         catch (Exception ex)
         {
+            await _projectRepository.RollbackTransactionAsync();
             Debug.WriteLine($"Error updating Project entity : {ex.Message}");
             return null!;
         }
@@ -92,6 +98,7 @@ public class ProjectService(IProjectRepository projectRepository, IProjectEmploy
 
     public async Task<bool> DeleteAsync(int id)
     {
+        await _projectRepository.BeginTransactionAsync();
         try
         {
             var existingProject = await _projectRepository.GetAsync(e => e.Id == id) ?? throw new Exception($"Company with ID {id} does not exist.");
@@ -99,10 +106,12 @@ public class ProjectService(IProjectRepository projectRepository, IProjectEmploy
             var deleteProject = await _projectRepository.DeleteAsync(e => e.Id == existingProject.Id);
             if (!deleteProject)
                 throw new Exception($"Error deleting Project with ID {id}");
+            await _projectRepository.CommitTransactionAsync();
             return true;
         }
         catch (Exception ex)
         {
+            await _projectRepository.RollbackTransactionAsync();
             Debug.WriteLine($"Error deleting Project entity : {ex.Message}");
             return false;
         }
@@ -145,11 +154,27 @@ public class ProjectService(IProjectRepository projectRepository, IProjectEmploy
 
     public async Task DeleteProjectEmployeesByProjectId(int projectId)
     {
-        await _projectRepository.DeleteProjectEmployeesByProjectId(projectId);
+        try
+        {
+            await _projectRepository.DeleteProjectEmployeesByProjectId(projectId);
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"Error deleting ProjectEmployees by ProjectId : {ex.Message}");
+
+        }
     }
 
     public async Task UpdateProjectEmployeesByProjectId(int projectId)
     {
-        await _projectRepository.UpdateProjectEmployeesByProjectId(projectId);
+        try
+        {
+            await _projectRepository.UpdateProjectEmployeesByProjectId(projectId);
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"Error updating ProjectEmployees by ProjectId : {ex.Message}");
+
+        }
     }
 }
